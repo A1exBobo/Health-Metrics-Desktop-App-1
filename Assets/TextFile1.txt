@@ -1,0 +1,7 @@
+﻿| Criteriu                     | BMI                             | PI                  |
+| ---------------------------- | ------------------------------- | ------------------- |
+| Persoane medii               | Bun                             | Bun, similar        |
+| Persoane foarte înalte       | Subestimează greutatea ideală   | Mai precis          |
+| Persoane foarte scunde       | Supraestimează greutatea ideală | Mai precis          |
+| Sportivi/masa musculară mare | Poate fi înșelător              | Similar, nu perfect |
+| Simplitate/uz clinic         | Excelent                        | Mai rar folosit     |
