@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -14,9 +17,56 @@ namespace MassIndex_calculator
 {
     public partial class Form1 : Form
     {
+        private string connString;
+        private SqlConnection connection;
+        private SqlDataAdapter adapter;
+        private SqlCommandBuilder commandBuilder;
+        private DataTable table = new DataTable("ValoriIndecsi");
         public Form1()
         {
             InitializeComponent();
+
+            connString = ConfigurationManager.ConnectionStrings["Indecsi"].ConnectionString;
+            connection = new SqlConnection(connString);
+
+            adapter = new SqlDataAdapter("SELECT * FROM dbo.ValoriIndecsi", connection);
+            commandBuilder = new SqlCommandBuilder(adapter);
+
+            LoadData();
+        }
+
+        private void InitializeDatabase()
+        {
+            try
+            {
+                connString = ConfigurationManager.ConnectionStrings["Indecsi"].ConnectionString;
+                connection = new SqlConnection(connString);
+                connection.Open(); // Test conexiune
+                connection.Close();
+
+                adapter = new SqlDataAdapter("SELECT Id, Mass, Height, Date, BMI, PI FROM dbo.ValoriIndecsi", connection);
+                commandBuilder = new SqlCommandBuilder(adapter);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare inițializare DB: " + ex.Message);
+            }
+        }
+
+        private void LoadData()
+        {
+            if (adapter == null)
+                return;
+            try
+            {
+                table.Clear();
+                adapter.Fill(table);
+                dataGridView1.DataSource = table;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare la incarcare: " + ex.Message);
+            }
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -43,7 +93,7 @@ namespace MassIndex_calculator
         {
 
         }
-       
+
         private void button1_Click(object sender, EventArgs e)
         {
             float masa = float.Parse(textBox1.Text);
@@ -66,7 +116,7 @@ namespace MassIndex_calculator
 
         }
 
-       
+
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -80,7 +130,7 @@ namespace MassIndex_calculator
 
         private void textBox7_TextChanged(object sender, EventArgs e)
         {
-        
+
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
@@ -92,5 +142,98 @@ namespace MassIndex_calculator
         {
 
         }
+
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // Citeste connection string din App.config
+            connString = ConfigurationManager.ConnectionStrings["Indecsi"].ConnectionString;
+            connection = new SqlConnection(connString);
+            // Setare DataGridView
+            dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.MultiSelect = false;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+            // Adaugare coloane
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id", HeaderText = "ID", ReadOnly = true });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Mass", HeaderText = "Mass" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Height", HeaderText = "Height" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Date", HeaderText = "Date" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "BMI", HeaderText = "BMI" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "PI", HeaderText = "PI" });
+
+            // Conexiune baza de date
+            connection = new SqlConnection(connString);
+            adapter = new SqlDataAdapter("SELECT Id, Mass, Height, Date, BMI, PI FROM dbo.ValoriIndecsi", connection);
+            commandBuilder = new SqlCommandBuilder(adapter);
+
+            // Incarcare date
+            LoadData();
+
+            // Adaugam DataGridView pe form daca nu l-ai pus in designer
+            this.Controls.Add(dataGridView1);
+            dataGridView1.Dock = DockStyle.Fill;
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+         
+            // Validate input
+            if (!float.TryParse(textBox1.Text, out float mass) ||
+                !float.TryParse(textBox2.Text, out float height))
+            {
+                MessageBox.Show("Please enter valid numbers for Mass and Height.");
+                return;
+            }
+
+            // Parse BMI and PI from textboxes (already calculated)
+            if (!double.TryParse(textBox3.Text, out double bmi) ||
+                !double.TryParse(textBox4.Text, out double pi))
+            {
+                MessageBox.Show("BMI or PI values are invalid.");
+                return;
+            }
+
+            try
+            {
+                // Create new row
+                DataRow newRow = table.NewRow();
+                newRow["Mass"] = mass;
+                newRow["Height"] = height;
+                newRow["Date"] = DateTime.Now;          // store current date
+                newRow["BMI"] = Math.Round(bmi, 2);     // round if needed
+                newRow["PI"] = Math.Round(pi, 2);
+
+                // Optionally, store categories/ideal weights
+                // newRow["BMICategory"] = textBox5.Text;
+                // newRow["PICategory"] = textBox6.Text;
+                // newRow["IdealBMI"] = textBox7.Text;
+                // newRow["IdealPI"] = textBox8.Text;
+
+                table.Rows.Add(newRow);
+
+                // Update database
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                adapter.Update(table);
+
+                // Refresh DataGridView
+                LoadData();
+
+                MessageBox.Show("Data saved successfully!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error saving data: " + ex.Message);
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
+

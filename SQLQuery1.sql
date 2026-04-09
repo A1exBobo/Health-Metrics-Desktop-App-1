@@ -1,0 +1,9 @@
+﻿CREATE TABLE dbo.ValoriIndecsi
+(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Mass DECIMAL(6,2) NOT NULL,
+    Height DECIMAL(6,2) NOT NULL,
+    Date DATE NOT NULL,
+    BMI DECIMAL(5,2) NOT NULL,
+    PI DECIMAL(5,2) NOT NULL
+);
