@@ -1,1 +1,1 @@
-# MassIndex_calculator
+Body & Calorie Tracker is a simple desktop application designed to calculate BMI and Ponderal Index (PI), and help users track their daily calorie and nutrient intake, including protein and other essential macros.
