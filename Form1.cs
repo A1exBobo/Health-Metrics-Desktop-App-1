@@ -29,10 +29,19 @@ namespace MassIndex_calculator
 
         
 
-        private void LoadData()
+        private void LoadDataInDVG()
         {
             table.Clear();
             adapter.Fill(table);
+
+
+            dataGridView1.Columns["ID"].DisplayIndex = 0;
+            dataGridView1.Columns["Person"].DisplayIndex = 1;
+            dataGridView1.Columns["Mass"].DisplayIndex = 2;
+            dataGridView1.Columns["Height"].DisplayIndex = 3;
+            dataGridView1.Columns["Date"].DisplayIndex = 4;
+            dataGridView1.Columns["BMI"].DisplayIndex = 5;
+            dataGridView1.Columns["PI"].DisplayIndex = 6;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -41,7 +50,7 @@ namespace MassIndex_calculator
             connection = new SqlConnection(connString);
 
             adapter = new SqlDataAdapter(
-                "SELECT Id, Mass, Height, Date, BMI, PI FROM dbo.ValoriIndecsi",
+                "SELECT Id, Person, Mass, Height, Date, BMI, PI FROM dbo.ValoriIndecsi",
                 connection);
 
             commandBuilder = new SqlCommandBuilder(adapter);
@@ -53,6 +62,7 @@ namespace MassIndex_calculator
             // 1. Create columns first
             dataGridView1.Columns.Clear();
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id", HeaderText = "ID", ReadOnly = true });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Person", HeaderText = "Person" });
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Mass", HeaderText = "Mass" });
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Height", HeaderText = "Height" });
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Date", HeaderText = "Date" });
@@ -64,7 +74,7 @@ namespace MassIndex_calculator
             dataGridView1.DataSource = table;
 
             // 3. Load data AFTER binding
-            LoadData();
+            LoadDataInDVG();
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -172,6 +182,7 @@ namespace MassIndex_calculator
                 newRow["Date"] = DateTime.Now;          // store current date
                 newRow["BMI"] = Math.Round(bmi, 2);     // round if needed
                 newRow["PI"] = Math.Round(pi, 2);
+                newRow["Person"] = "User_" + DateTime.Now.Ticks;
 
                 // Optionally, store categories/ideal weights
                 // newRow["BMICategory"] = textBox5.Text;
@@ -186,7 +197,7 @@ namespace MassIndex_calculator
                 adapter.Update(table);
 
                 // Refresh DataGridView
-                LoadData();
+                LoadDataInDVG();
 
                 MessageBox.Show("Data saved successfully!");
 
@@ -207,6 +218,21 @@ namespace MassIndex_calculator
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            //cand se apasa butonul se adauga o persoana noua 
+        }
+
+        private void label12_Click(object sender, EventArgs e)
         {
 
         }

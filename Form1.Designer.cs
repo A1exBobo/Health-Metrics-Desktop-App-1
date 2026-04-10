@@ -52,9 +52,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -276,41 +275,34 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 24);
             this.comboBox1.TabIndex = 25;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(227, 77);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(123, 23);
+            this.button3.TabIndex = 29;
+            this.button3.Text = "Add person";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(90, 54);
+            this.label12.Location = new System.Drawing.Point(72, 55);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(41, 16);
-            this.label12.TabIndex = 26;
-            this.label12.Text = "name";
-            // 
-            // textBox9
-            // 
-            this.textBox9.Location = new System.Drawing.Point(240, 78);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.ReadOnly = true;
-            this.textBox9.Size = new System.Drawing.Size(100, 22);
-            this.textBox9.TabIndex = 27;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(278, 59);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(31, 16);
-            this.label13.TabIndex = 28;
-            this.label13.Text = "age";
+            this.label12.Size = new System.Drawing.Size(100, 16);
+            this.label12.TabIndex = 30;
+            this.label12.Text = "choose person ";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1090, 782);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.textBox9);
             this.Controls.Add(this.label12);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button2);
@@ -370,9 +362,8 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.Label label13;
     }
 }
 
