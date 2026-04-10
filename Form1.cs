@@ -25,48 +25,46 @@ namespace MassIndex_calculator
         public Form1()
         {
             InitializeComponent();
-
-            connString = ConfigurationManager.ConnectionStrings["Indecsi"].ConnectionString;
-            connection = new SqlConnection(connString);
-
-            adapter = new SqlDataAdapter("SELECT * FROM dbo.ValoriIndecsi", connection);
-            commandBuilder = new SqlCommandBuilder(adapter);
-
-            LoadData();
         }
 
-        private void InitializeDatabase()
-        {
-            try
-            {
-                connString = ConfigurationManager.ConnectionStrings["Indecsi"].ConnectionString;
-                connection = new SqlConnection(connString);
-                connection.Open(); // Test conexiune
-                connection.Close();
-
-                adapter = new SqlDataAdapter("SELECT Id, Mass, Height, Date, BMI, PI FROM dbo.ValoriIndecsi", connection);
-                commandBuilder = new SqlCommandBuilder(adapter);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Eroare inițializare DB: " + ex.Message);
-            }
-        }
+        
 
         private void LoadData()
         {
-            if (adapter == null)
-                return;
-            try
-            {
-                table.Clear();
-                adapter.Fill(table);
-                dataGridView1.DataSource = table;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Eroare la incarcare: " + ex.Message);
-            }
+            table.Clear();
+            adapter.Fill(table);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            connString = ConfigurationManager.ConnectionStrings["Indecsi"].ConnectionString;
+            connection = new SqlConnection(connString);
+
+            adapter = new SqlDataAdapter(
+                "SELECT Id, Mass, Height, Date, BMI, PI FROM dbo.ValoriIndecsi",
+                connection);
+
+            commandBuilder = new SqlCommandBuilder(adapter);
+
+            table = new DataTable();
+
+            dataGridView1.AutoGenerateColumns = false;
+
+            // 1. Create columns first
+            dataGridView1.Columns.Clear();
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id", HeaderText = "ID", ReadOnly = true });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Mass", HeaderText = "Mass" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Height", HeaderText = "Height" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Date", HeaderText = "Date" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "BMI", HeaderText = "BMI" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "PI", HeaderText = "PI" });
+
+
+            // 2. IMPORTANT: bind here
+            dataGridView1.DataSource = table;
+
+            // 3. Load data AFTER binding
+            LoadData();
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -144,39 +142,7 @@ namespace MassIndex_calculator
         }
 
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            // Citeste connection string din App.config
-            connString = ConfigurationManager.ConnectionStrings["Indecsi"].ConnectionString;
-            connection = new SqlConnection(connString);
-            // Setare DataGridView
-            dataGridView1.AutoGenerateColumns = false;
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.MultiSelect = false;
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToDeleteRows = false;
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-
-            // Adaugare coloane
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id", HeaderText = "ID", ReadOnly = true });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Mass", HeaderText = "Mass" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Height", HeaderText = "Height" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Date", HeaderText = "Date" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "BMI", HeaderText = "BMI" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "PI", HeaderText = "PI" });
-
-            // Conexiune baza de date
-            connection = new SqlConnection(connString);
-            adapter = new SqlDataAdapter("SELECT Id, Mass, Height, Date, BMI, PI FROM dbo.ValoriIndecsi", connection);
-            commandBuilder = new SqlCommandBuilder(adapter);
-
-            // Incarcare date
-            LoadData();
-
-            // Adaugam DataGridView pe form daca nu l-ai pus in designer
-            this.Controls.Add(dataGridView1);
-            dataGridView1.Dock = DockStyle.Fill;
-        }
+        
 
         private void button2_Click_1(object sender, EventArgs e)
         {
@@ -201,8 +167,8 @@ namespace MassIndex_calculator
             {
                 // Create new row
                 DataRow newRow = table.NewRow();
-                newRow["Mass"] = mass;
-                newRow["Height"] = height;
+                newRow["Mass"] = Math.Round(mass,2);
+                newRow["Height"] = Math.Round(height,2);
                 newRow["Date"] = DateTime.Now;          // store current date
                 newRow["BMI"] = Math.Round(bmi, 2);     // round if needed
                 newRow["PI"] = Math.Round(pi, 2);
@@ -223,6 +189,16 @@ namespace MassIndex_calculator
                 LoadData();
 
                 MessageBox.Show("Data saved successfully!");
+
+
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+                textBox4.Clear();
+                textBox5.Clear();
+                textBox6.Clear();
+                textBox7.Clear();
+                textBox8.Clear();
             }
             catch (Exception ex)
             {
