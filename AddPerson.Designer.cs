@@ -28,24 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.AgeBox = new System.Windows.Forms.NumericUpDown();
             this.label13 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.FirstNameBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.LastNameBox = new System.Windows.Forms.TextBox();
+            this.SavePersonButton = new System.Windows.Forms.Button();
+            this.FInitialsBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AgeBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // numericUpDown1
+            // AgeBox
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(145, 176);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(146, 22);
-            this.numericUpDown1.TabIndex = 32;
+            this.AgeBox.Location = new System.Drawing.Point(145, 176);
+            this.AgeBox.Name = "AgeBox";
+            this.AgeBox.Size = new System.Drawing.Size(146, 22);
+            this.AgeBox.TabIndex = 32;
+            this.AgeBox.ValueChanged += new System.EventHandler(this.AgeBox_ValueChanged);
             // 
             // label13
             // 
@@ -56,12 +57,13 @@
             this.label13.TabIndex = 31;
             this.label13.Text = "age";
             // 
-            // textBox1
+            // FirstNameBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(145, 100);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(146, 22);
-            this.textBox1.TabIndex = 33;
+            this.FirstNameBox.Location = new System.Drawing.Point(145, 100);
+            this.FirstNameBox.Name = "FirstNameBox";
+            this.FirstNameBox.Size = new System.Drawing.Size(146, 22);
+            this.FirstNameBox.TabIndex = 33;
+            this.FirstNameBox.TextChanged += new System.EventHandler(this.FirstNameBox_TextChanged);
             // 
             // label1
             // 
@@ -81,29 +83,31 @@
             this.label2.TabIndex = 36;
             this.label2.Text = "LastName";
             // 
-            // textBox2
+            // LastNameBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(297, 100);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(139, 22);
-            this.textBox2.TabIndex = 35;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.LastNameBox.Location = new System.Drawing.Point(297, 100);
+            this.LastNameBox.Name = "LastNameBox";
+            this.LastNameBox.Size = new System.Drawing.Size(139, 22);
+            this.LastNameBox.TabIndex = 35;
+            this.LastNameBox.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
-            // button1
+            // SavePersonButton
             // 
-            this.button1.Location = new System.Drawing.Point(338, 176);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(243, 61);
-            this.button1.TabIndex = 37;
-            this.button1.Text = "Save person";
-            this.button1.UseVisualStyleBackColor = true;
+            this.SavePersonButton.Location = new System.Drawing.Point(338, 176);
+            this.SavePersonButton.Name = "SavePersonButton";
+            this.SavePersonButton.Size = new System.Drawing.Size(243, 61);
+            this.SavePersonButton.TabIndex = 37;
+            this.SavePersonButton.Text = "Save person";
+            this.SavePersonButton.UseVisualStyleBackColor = true;
+            this.SavePersonButton.Click += new System.EventHandler(this.button1_Click);
             // 
-            // textBox3
+            // FInitialsBox
             // 
-            this.textBox3.Location = new System.Drawing.Point(442, 100);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(139, 22);
-            this.textBox3.TabIndex = 38;
+            this.FInitialsBox.Location = new System.Drawing.Point(442, 100);
+            this.FInitialsBox.Name = "FInitialsBox";
+            this.FInitialsBox.Size = new System.Drawing.Size(139, 22);
+            this.FInitialsBox.TabIndex = 38;
+            this.FInitialsBox.TextChanged += new System.EventHandler(this.FInitialsBox_TextChanged);
             // 
             // label3
             // 
@@ -120,17 +124,18 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.FInitialsBox);
+            this.Controls.Add(this.SavePersonButton);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.LastNameBox);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.FirstNameBox);
+            this.Controls.Add(this.AgeBox);
             this.Controls.Add(this.label13);
             this.Name = "AddPerson";
             this.Text = "AddPerson";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.Load += new System.EventHandler(this.AddPerson_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.AgeBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -138,14 +143,14 @@
 
         #endregion
 
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown AgeBox;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox FirstNameBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox LastNameBox;
+        private System.Windows.Forms.Button SavePersonButton;
+        private System.Windows.Forms.TextBox FInitialsBox;
         private System.Windows.Forms.Label label3;
     }
 }
