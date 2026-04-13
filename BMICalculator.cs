@@ -45,19 +45,20 @@ namespace MassIndex_calculator
         {
           
             // BMI normal range midpoint
-            float normalBMI = 22f;
+            float normalBMI = (BMI_ranges[0] + BMI_ranges[1])/2f;
 
             // Calcul greutate ideală
             float idealWeight = normalBMI * (Inaltime * Inaltime);
 
             // Diferența între greutatea ideală și cea curentă
             float diference = idealWeight - Masa;
+            float epsilon = 0.1f; //100 grame 
 
-            if (diference > 0)
+            if (diference > epsilon)
             {
                 return $"Mai trebuie sa pui {diference:F2} kg pana la medie.";
             }
-            else if (diference < 0)
+            else if (diference < epsilon)
             {
                 return $"Mai trebuie sa slabesti {Math.Abs(diference):F2} kg pana la medie.";
             }

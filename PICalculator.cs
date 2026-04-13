@@ -20,12 +20,17 @@ namespace MassIndex_calculator
 
         public override string Calculate()
         {
-            float PI =GetPI();
+            float PI = GetPI();
             return PI.ToString();
         }
 
         public override string WeightCategory()
         {
+            /*
+              BMI_ranges = { 18.5f, 24.9f, 29.9f, 34.9f, 39.9f };
+              PI_ranges = { 11f, 14f, 17f };
+             */
+
             float pi = GetPI();
 
             if (pi < PI_ranges[0]) return "Underweight";
@@ -38,28 +43,20 @@ namespace MassIndex_calculator
 
         public override string IdealWeight()
         {
+            float normalPI = (PI_ranges[0] + PI_ranges[1]) / 2f;
 
-            // BMI normal range midpoint
-            float normalPI = 11.5f;
-
-            // Calcul greutate ideală
             float idealWeight = normalPI * (Inaltime * Inaltime * Inaltime);
-
-            // Diferența între greutatea ideală și cea curentă
             float diference = idealWeight - Masa;
 
-            if (diference > 0)
-            {
+            float epsilon = 0.1f; //100 grame
+
+            if (diference > epsilon)
                 return $"Mai trebuie sa pui {diference:F2} kg pana la medie.";
-            }
-            else if (diference < 0)
-            {
+
+            if (diference < -epsilon)
                 return $"Mai trebuie sa slabesti {Math.Abs(diference):F2} kg";
-            }
-            else
-            {
-                return "Ai greutatea ideala!";
-            }
+
+            return "Ai greutatea ideala!";
         }
 
     }

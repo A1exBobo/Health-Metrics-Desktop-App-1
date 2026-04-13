@@ -51,6 +51,14 @@ namespace MassIndex_calculator
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(FirstNameBox.Text) ||
+                string.IsNullOrWhiteSpace(LastNameBox.Text) ||
+                string.IsNullOrWhiteSpace(FInitialsBox.Text))
+            {
+                MessageBox.Show("All fields must be completed!");
+                return;
+            }
+
             Person person = new Person(
                 FirstNameBox.Text,
                 LastNameBox.Text,
@@ -58,10 +66,21 @@ namespace MassIndex_calculator
                 (int)AgeBox.Value
             );
 
+            try
+            {
+                person.FixNames();
+                person.Validate();
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
             string query = @"
-        INSERT INTO dbo.Person (FirstName, LastName, FatherInitials, Age)
-        VALUES (@fn, @ln, @fi, @age);
-        SELECT SCOPE_IDENTITY();";
+            INSERT INTO dbo.Person (FirstName, LastName, FatherInitials, Age)
+            VALUES (@fn, @ln, @fi, @age);
+            SELECT SCOPE_IDENTITY();";
 
             SqlParameter[] parameters = new SqlParameter[]
             {
@@ -73,10 +92,8 @@ namespace MassIndex_calculator
 
             object result = db.ExecuteScalar(query, parameters);
 
-            int newId = Convert.ToInt32(result);
-
-            person.Id = newId;
-            NewPersonId = newId;
+            person.Id = Convert.ToInt32(result);
+            NewPersonId = person.Id;
 
             this.DialogResult = DialogResult.OK;
             this.Close();

@@ -1,4 +1,6 @@
-﻿namespace MassIndex_calculator
+﻿using System.Drawing;
+
+namespace MassIndex_calculator
 {
     partial class AddPerson
     {
@@ -37,15 +39,31 @@
             this.SavePersonButton = new System.Windows.Forms.Button();
             this.FInitialsBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.AgeBox)).BeginInit();
             this.SuspendLayout();
             // 
             // AgeBox
             // 
             this.AgeBox.Location = new System.Drawing.Point(145, 176);
+            this.AgeBox.Maximum = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.AgeBox.Minimum = new decimal(new int[] {
+            18,
+            0,
+            0,
+            0});
             this.AgeBox.Name = "AgeBox";
             this.AgeBox.Size = new System.Drawing.Size(146, 22);
             this.AgeBox.TabIndex = 32;
+            this.AgeBox.Value = new decimal(new int[] {
+            18,
+            0,
+            0,
+            0});
             this.AgeBox.ValueChanged += new System.EventHandler(this.AgeBox_ValueChanged);
             // 
             // label13
@@ -118,11 +136,22 @@
             this.label3.TabIndex = 39;
             this.label3.Text = "Father Initials";
             // 
+            // label4
+            // 
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
+            this.label4.Location = new System.Drawing.Point(127, 202);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(164, 35);
+            this.label4.TabIndex = 40;
+            this.label4.Text = "Minimum age: 18 \r\n (values below will be corrected)";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // AddPerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.FInitialsBox);
             this.Controls.Add(this.SavePersonButton);
@@ -152,5 +181,6 @@
         private System.Windows.Forms.Button SavePersonButton;
         private System.Windows.Forms.TextBox FInitialsBox;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }
