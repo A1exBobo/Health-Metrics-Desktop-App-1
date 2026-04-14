@@ -40,12 +40,15 @@ namespace MassIndex_calculator
             this.FInitialsBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.AgeBox)).BeginInit();
             this.SuspendLayout();
             // 
             // AgeBox
             // 
-            this.AgeBox.Location = new System.Drawing.Point(145, 176);
+            this.AgeBox.Location = new System.Drawing.Point(133, 149);
             this.AgeBox.Maximum = new decimal(new int[] {
             120,
             0,
@@ -69,7 +72,7 @@ namespace MassIndex_calculator
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(205, 157);
+            this.label13.Location = new System.Drawing.Point(193, 130);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(31, 16);
             this.label13.TabIndex = 31;
@@ -77,7 +80,7 @@ namespace MassIndex_calculator
             // 
             // FirstNameBox
             // 
-            this.FirstNameBox.Location = new System.Drawing.Point(145, 100);
+            this.FirstNameBox.Location = new System.Drawing.Point(133, 73);
             this.FirstNameBox.Name = "FirstNameBox";
             this.FirstNameBox.Size = new System.Drawing.Size(146, 22);
             this.FirstNameBox.TabIndex = 33;
@@ -86,7 +89,7 @@ namespace MassIndex_calculator
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(189, 81);
+            this.label1.Location = new System.Drawing.Point(177, 54);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(69, 16);
             this.label1.TabIndex = 34;
@@ -95,7 +98,7 @@ namespace MassIndex_calculator
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(335, 81);
+            this.label2.Location = new System.Drawing.Point(323, 54);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(69, 16);
             this.label2.TabIndex = 36;
@@ -103,7 +106,7 @@ namespace MassIndex_calculator
             // 
             // LastNameBox
             // 
-            this.LastNameBox.Location = new System.Drawing.Point(297, 100);
+            this.LastNameBox.Location = new System.Drawing.Point(285, 73);
             this.LastNameBox.Name = "LastNameBox";
             this.LastNameBox.Size = new System.Drawing.Size(139, 22);
             this.LastNameBox.TabIndex = 35;
@@ -111,9 +114,9 @@ namespace MassIndex_calculator
             // 
             // SavePersonButton
             // 
-            this.SavePersonButton.Location = new System.Drawing.Point(338, 176);
+            this.SavePersonButton.Location = new System.Drawing.Point(326, 149);
             this.SavePersonButton.Name = "SavePersonButton";
-            this.SavePersonButton.Size = new System.Drawing.Size(243, 61);
+            this.SavePersonButton.Size = new System.Drawing.Size(176, 61);
             this.SavePersonButton.TabIndex = 37;
             this.SavePersonButton.Text = "Save person";
             this.SavePersonButton.UseVisualStyleBackColor = true;
@@ -121,16 +124,16 @@ namespace MassIndex_calculator
             // 
             // FInitialsBox
             // 
-            this.FInitialsBox.Location = new System.Drawing.Point(442, 100);
+            this.FInitialsBox.Location = new System.Drawing.Point(430, 73);
             this.FInitialsBox.Name = "FInitialsBox";
-            this.FInitialsBox.Size = new System.Drawing.Size(139, 22);
+            this.FInitialsBox.Size = new System.Drawing.Size(72, 22);
             this.FInitialsBox.TabIndex = 38;
             this.FInitialsBox.TextChanged += new System.EventHandler(this.FInitialsBox_TextChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(469, 81);
+            this.label3.Location = new System.Drawing.Point(423, 54);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 16);
             this.label3.TabIndex = 39;
@@ -139,18 +142,51 @@ namespace MassIndex_calculator
             // label4
             // 
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            this.label4.Location = new System.Drawing.Point(127, 202);
+            this.label4.Location = new System.Drawing.Point(115, 175);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(164, 35);
             this.label4.TabIndex = 40;
             this.label4.Text = "Minimum age: 18 \r\n (values below will be corrected)";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // label5
+            // 
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
+            this.label5.Location = new System.Drawing.Point(423, 98);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(94, 15);
+            this.label5.TabIndex = 41;
+            this.label5.Text = "max 2 characters";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label6
+            // 
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
+            this.label6.Location = new System.Drawing.Point(282, 98);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(94, 15);
+            this.label6.TabIndex = 42;
+            this.label6.Text = "max 30 characters";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label7
+            // 
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
+            this.label7.Location = new System.Drawing.Point(130, 98);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(94, 15);
+            this.label7.TabIndex = 43;
+            this.label7.Text = "max 30 characters";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // AddPerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(727, 293);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.FInitialsBox);
@@ -182,5 +218,8 @@ namespace MassIndex_calculator
         private System.Windows.Forms.TextBox FInitialsBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
     }
 }

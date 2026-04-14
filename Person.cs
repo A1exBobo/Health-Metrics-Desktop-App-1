@@ -32,9 +32,9 @@ namespace MassIndex_calculator
 
         public void Validate()
         {
-            ValidateName(FirstName);
-            ValidateName(LastName);
-            ValidateName(FatherInitials);
+            ValidateName(FirstName, "First Name", 2, 30);
+            ValidateName(LastName, "Last Name", 2, 30);
+            ValidateName(FatherInitials, "Father Initials", 1, 2);
         }
 
         public string FullName()
@@ -58,20 +58,23 @@ namespace MassIndex_calculator
                 return string.Empty;
 
             // capitalize first letter
-            return char.ToUpper(name[0]) + name.Substring(1);
+            return char.ToUpper(name[0]) + name.Substring(1).ToLower();
         }
 
 
-        public void ValidateName(string name)
+        public void ValidateName(string name, string fieldName, int minLength = 1, int maxLength = 50)
         {
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Name cannot be empty");
+                throw new ArgumentException($"{fieldName} cannot be empty");
+
+            if (name.Length < minLength || name.Length > maxLength)
+                throw new ArgumentException($"{fieldName} must be between {minLength} and {maxLength} characters");
 
             if (!char.IsUpper(name[0]))
-                throw new ArgumentException("Name must start with a capital letter");
+                throw new ArgumentException($"{fieldName} must start with a capital letter");
 
             if (name.Any(char.IsDigit))
-                throw new ArgumentException("Name must not contain numbers");
+                throw new ArgumentException($"{fieldName} must not contain numbers");
         }
 
     }
