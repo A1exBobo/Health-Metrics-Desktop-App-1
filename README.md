@@ -1,5 +1,3 @@
-<img width="1920" height="1080" alt="Captură de ecran 2026-04-14 191946" src="https://github.com/user-attachments/assets/cbae01c5-23ec-4b87-8a39-e6b3dacac252" />
-<img width="1920" height="1080" alt="Captură de ecran 2026-04-14 191827" src="https://github.com/user-attachments/assets/db7ea7cb-b87e-45b3-bae1-161f375b8539" />
 ## Overview
 
 This is a Windows Forms desktop application designed to track personal health metrics such as Body Mass Index (BMI) and Ponderal Index (PI).
@@ -63,7 +61,11 @@ The application allows users to manage multiple people, record historical data (
 
 ---
 
-## 📷 Screenshots
+##  Screenshots
+<img width="1920" height="1080" alt="Captură de ecran 2026-04-14 191946" src="https://github.com/user-attachments/assets/cbae01c5-23ec-4b87-8a39-e6b3dacac252" />
+
+
+<img width="1920" height="1080" alt="Captură de ecran 2026-04-14 191827" src="https://github.com/user-attachments/assets/db7ea7cb-b87e-45b3-bae1-161f375b8539" />
 
 *(Add screenshots here if possible — highly recommended)*
 
