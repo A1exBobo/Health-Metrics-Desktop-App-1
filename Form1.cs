@@ -68,9 +68,26 @@ namespace MassIndex_calculator
         {
             LoadPeopleIntoComboBox();
             LoadDataInDVG();
+
+
+            // MASS (kg)
+            numericUpDown1.Minimum = 30;   // realistic lower bound
+            numericUpDown1.Maximum = 250;  // realistic upper bound
+            numericUpDown1.DecimalPlaces = 1;
+            numericUpDown1.Increment = 0.5M;
+
+            // HEIGHT (meters)
+            numericUpDown2.Minimum = 1.20M;
+            numericUpDown2.Maximum = 2.30M;
+            numericUpDown2.DecimalPlaces = 2;
+            numericUpDown2.Increment = 0.01M;
+
+            //max date = today's date 
+            dateTimePicker1.MaxDate = DateTime.Today;
+
         }
 
-        
+
 
         // ================= SAVE =================
         private void SaveButton_Click(object sender, EventArgs e)
@@ -84,11 +101,41 @@ namespace MassIndex_calculator
             float mass = (float)numericUpDown1.Value;
             float height = (float)numericUpDown2.Value;
 
+            // Check if both are still default (minimum)
+            if (mass == (float)numericUpDown1.Minimum &&
+                height == (float)numericUpDown2.Minimum)
+            {
+                var result = MessageBox.Show(
+                    "You didn't change the default values of height and weight.\nDo you want to save anyway?",
+                    "Default Values Warning",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                if (result == DialogResult.No)
+                    return;
+            }
+
             if (mass <= 0 || height <= 0)
             {
                 MessageBox.Show("Mass and height must be greater than 0!");
                 return;
             }
+
+            if (!ValidateInputs(mass, height))
+                return;
+
+            DateTime selectedDate = dateTimePicker1.Value.Date;
+
+            if (selectedDate > DateTime.Today)
+            {
+                MessageBox.Show("Date cannot be in the future!");
+                return;
+            }
+
+
+
+
 
             BMICalculator BMI = new BMICalculator(height, mass);
             PICalculator PI = new PICalculator(height, mass);
@@ -99,17 +146,17 @@ namespace MassIndex_calculator
             int personId = (int)comboBox1.SelectedValue;
 
             string query = @"
-    INSERT INTO dbo.ValoriIndecsi (PersonId, Mass, Height, Date, BMI, PI)
-    VALUES (@PersonId, @Mass, @Height, @Date, @BMI, @PI)";
+            INSERT INTO dbo.ValoriIndecsi (PersonId, Mass, Height, Date, BMI, PI)
+            VALUES (@PersonId, @Mass, @Height, @Date, @BMI, @PI)";
 
             SqlParameter[] parameters = new SqlParameter[]
             {
-        new SqlParameter("@PersonId", personId),
-        new SqlParameter("@Mass", Math.Round(mass, 2)),
-        new SqlParameter("@Height", Math.Round(height, 2)),
-        new SqlParameter("@Date", DateTime.Now),
-        new SqlParameter("@BMI", Math.Round(bmi, 2)),
-        new SqlParameter("@PI", Math.Round(pi, 2))
+            new SqlParameter("@PersonId", personId),
+            new SqlParameter("@Mass", Math.Round(mass, 2)),
+            new SqlParameter("@Height", Math.Round(height, 2)),
+            new SqlParameter("@Date", selectedDate),
+            new SqlParameter("@BMI", Math.Round(bmi, 2)),
+            new SqlParameter("@PI", Math.Round(pi, 2))
             };
 
             try
@@ -149,12 +196,32 @@ namespace MassIndex_calculator
             }
         }
 
+        private bool ValidateInputs(float mass, float height)
+        {
+            if (mass < 30 || mass > 250)
+            {
+                MessageBox.Show("Mass must be between 30 and 250 kg.");
+                return false;
+            }
+
+            if (height < 1.20 || height > 2.30)
+            {
+                MessageBox.Show("Height must be between 1.20 m and 2.30 m.");
+                return false;
+            }
+
+            return true;
+        }
+
         // ================= CALCULATE =================
         private void button1_Click_1(object sender, EventArgs e)
         {
 
             float masa = (float)numericUpDown1.Value;
             float inaltime = (float)numericUpDown2.Value;
+
+            if (!ValidateInputs(masa, inaltime))
+                return;
 
             BMICalculator BMI = new BMICalculator(inaltime, masa);
             PICalculator PI = new PICalculator(inaltime, masa);
