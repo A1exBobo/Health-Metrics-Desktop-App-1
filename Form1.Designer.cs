@@ -237,10 +237,9 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeight = 29;
             this.dataGridView1.Location = new System.Drawing.Point(65, 511);
-            this.dataGridView1.MaximumSize = new System.Drawing.Size(800, 300);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
@@ -277,28 +276,51 @@
             // 
             // numericUpDown1
             // 
+            this.numericUpDown1.DecimalPlaces = 2;
+            this.numericUpDown1.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.numericUpDown1.Location = new System.Drawing.Point(75, 161);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 22);
             this.numericUpDown1.TabIndex = 31;
-            this.numericUpDown1.DecimalPlaces = 2;
-            this.numericUpDown1.Increment = 0.1M;
-            this.numericUpDown1.Minimum = 1;
-            this.numericUpDown1.Maximum = 300;
-            this.numericUpDown1.Value = numericUpDown1.Minimum;
+            this.numericUpDown1.Value = this.numericUpDown1.Minimum;
             // 
             // numericUpDown2
             // 
+            this.numericUpDown2.DecimalPlaces = 2;
+            this.numericUpDown2.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numericUpDown2.Location = new System.Drawing.Point(75, 212);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            65536});
+            this.numericUpDown2.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(120, 22);
             this.numericUpDown2.TabIndex = 32;
-            this.numericUpDown2.DecimalPlaces = 2;
-            this.numericUpDown2.Increment = 0.01M;
-            this.numericUpDown2.Minimum = 0.5M;
-            this.numericUpDown2.Maximum = 2.5M;
-            this.numericUpDown2.Value = numericUpDown2.Minimum;
-
+            this.numericUpDown2.Value = this.numericUpDown2.Minimum;
             // 
             // Form1
             // 

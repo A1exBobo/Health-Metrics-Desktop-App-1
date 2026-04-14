@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace MassIndex_calculator
@@ -12,7 +13,39 @@ namespace MassIndex_calculator
         public Form1()
         {
             InitializeComponent();
+
+            this.Resize += (s, e) => ApplyLayout();
         }
+
+
+
+
+        // ================= RESIZE DVG =================
+        bool IsFullscreen()
+        {
+            return this.WindowState == FormWindowState.Maximized;
+        }
+
+
+        private void ApplyLayout()
+        {
+            int leftMargin = 20;   
+            int rightMargin = 20;
+            int topMargin = 420;   
+            int bottomMargin = 25;
+
+            int width = this.ClientSize.Width - leftMargin - rightMargin;
+            int height = this.ClientSize.Height - topMargin - bottomMargin;
+
+            // prevent negative / too small sizes
+            width = Math.Max(300, width);
+            height = Math.Max(150, height);
+
+            dataGridView1.Location = new Point(leftMargin, topMargin);
+            dataGridView1.Size = new Size(width, height);
+        }
+
+
 
         // ================= LOAD GRID =================
         private void LoadDataInDVG()
