@@ -21,10 +21,9 @@ namespace MassIndex_calculator
         }
 
 
-        public override string Calculate()
+        public override float Calculate()
         {
-            float  BMI = GetBMI();
-            return BMI.ToString();
+            return GetBMI();
         }
 
 
@@ -41,7 +40,7 @@ namespace MassIndex_calculator
             return "Obese Class 3";
         }
 
-        public override string IdealWeight()
+        public override float GetWeightDiffrence()
         {
           
             // BMI normal range midpoint
@@ -52,23 +51,11 @@ namespace MassIndex_calculator
 
             // Diferența între greutatea ideală și cea curentă
             float diference = idealWeight - Masa;
-            float epsilon = 0.1f; //100 grame 
 
-            if (diference > epsilon)
-            {
-                return $"Mai trebuie sa pui {diference:F2} kg pana la medie.";
-            }
-            else if (diference < epsilon)
-            {
-                return $"Mai trebuie sa slabesti {Math.Abs(diference):F2} kg pana la medie.";
-            }
-            else
-            {
-                return "Ai greutatea ideala!";
-            }
+            return diference;
+
+
         }
-
-
 
     }
 }

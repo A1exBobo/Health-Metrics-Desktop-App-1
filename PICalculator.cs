@@ -18,10 +18,9 @@ namespace MassIndex_calculator
             return Masa / (Inaltime * Inaltime * Inaltime);
         }
 
-        public override string Calculate()
+        public override float Calculate()
         {
-            float PI = GetPI();
-            return PI.ToString();
+            return GetPI();
         }
 
         public override string WeightCategory()
@@ -41,22 +40,14 @@ namespace MassIndex_calculator
             return "Obese Class 1,2 or 3";
         }
 
-        public override string IdealWeight()
+        public override float GetWeightDiffrence()
         {
             float normalPI = (PI_ranges[0] + PI_ranges[1]) / 2f;
 
             float idealWeight = normalPI * (Inaltime * Inaltime * Inaltime);
             float diference = idealWeight - Masa;
-
-            float epsilon = 0.1f; //100 grame
-
-            if (diference > epsilon)
-                return $"Mai trebuie sa pui {diference:F2} kg pana la medie.";
-
-            if (diference < -epsilon)
-                return $"Mai trebuie sa slabesti {Math.Abs(diference):F2} kg";
-
-            return "Ai greutatea ideala!";
+            
+            return diference;
         }
 
     }

@@ -46,6 +46,23 @@ namespace MassIndex_calculator
             comboBox1.ValueMember = "Id";
         }
 
+
+        // ================= SHOW WEIGHT TIPS =================
+
+        private string FormatWeightMessage(float diff)
+        {
+            float epsilon = 0.1f;
+
+            if (diff > epsilon)
+                return $"Mai trebuie sa pui {diff:0.00} kg pana la medie.";
+            else if (diff < -epsilon)
+                return $"Mai trebuie sa slabesti {Math.Abs(diff):0.00} kg pana la medie.";
+            else
+                return "Ai greutatea ideala!";
+        }
+
+
+
         // ================= FORM LOAD =================
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -53,94 +70,10 @@ namespace MassIndex_calculator
             LoadDataInDVG();
         }
 
-        // ================= CALCULATE =================
-        private void button1_Click(object sender, EventArgs e)
-        {
-            float masa = float.Parse(textBox1.Text);
-            float inaltime = float.Parse(textBox2.Text);
-
-            BMICalculator BMI = new BMICalculator(inaltime, masa);
-            PICalculator PI = new PICalculator(inaltime, masa);
-
-            textBox3.Text = BMI.Calculate();
-            textBox4.Text = PI.Calculate();
-
-            textBox5.Text = BMI.WeightCategory();
-            textBox6.Text = PI.WeightCategory();
-
-            textBox7.Text = BMI.IdealWeight();
-            textBox8.Text = PI.IdealWeight();
-        }
+        
 
         // ================= SAVE =================
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (!float.TryParse(textBox1.Text, out float mass) ||
-                !float.TryParse(textBox2.Text, out float height))
-            {
-                MessageBox.Show("Invalid input.");
-                return;
-            }
-
-            if (!double.TryParse(textBox3.Text, out double bmi) ||
-                !double.TryParse(textBox4.Text, out double pi))
-            {
-                MessageBox.Show("Invalid BMI/PI.");
-                return;
-            }
-
-            int personId = (int)comboBox1.SelectedValue;
-
-            string query = @"
-            INSERT INTO dbo.ValoriIndecsi (PersonId, Mass, Height, Date, BMI, PI)
-            VALUES (@PersonId, @Mass, @Height, @Date, @BMI, @PI)";
-
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@PersonId", personId),
-                new SqlParameter("@Mass", Math.Round(mass, 2)),
-                new SqlParameter("@Height", Math.Round(height, 2)),
-                new SqlParameter("@Date", DateTime.Now),
-                new SqlParameter("@BMI", Math.Round(bmi, 2)),
-                new SqlParameter("@PI", Math.Round(pi, 2))
-            };
-
-            try
-            {
-                db.ExecuteNonQuery(query, parameters);
-
-                LoadDataInDVG();
-
-                MessageBox.Show("Saved!");
-
-                textBox1.Clear();
-                textBox2.Clear();
-                textBox3.Clear();
-                textBox4.Clear();
-                textBox5.Clear();
-                textBox6.Clear();
-                textBox7.Clear();
-                textBox8.Clear();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
-        }
-
-        // ================= ADD PERSON =================
-        private void button3_Click(object sender, EventArgs e)
-        {
-            var form = new AddPerson();
-
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-                LoadPeopleIntoComboBox();
-                comboBox1.SelectedValue = form.NewPersonId;
-            }
-        }
-
-        private void button2_Click_1(object sender, EventArgs e)
+        private void SaveButton_Click(object sender, EventArgs e)
         {
             if (comboBox1.SelectedValue == null)
             {
@@ -148,25 +81,26 @@ namespace MassIndex_calculator
                 return;
             }
 
-            if (!float.TryParse(textBox1.Text, out float mass) ||
-                !float.TryParse(textBox2.Text, out float height))
+            float mass = (float)numericUpDown1.Value;
+            float height = (float)numericUpDown2.Value;
+
+            if (mass <= 0 || height <= 0)
             {
-                MessageBox.Show("Invalid mass or height!");
+                MessageBox.Show("Mass and height must be greater than 0!");
                 return;
             }
 
-            if (!double.TryParse(textBox3.Text, out double bmi) ||
-                !double.TryParse(textBox4.Text, out double pi))
-            {
-                MessageBox.Show("BMI or PI invalid!");
-                return;
-            }
+            BMICalculator BMI = new BMICalculator(height, mass);
+            PICalculator PI = new PICalculator(height, mass);
 
-            int personId = Convert.ToInt32(comboBox1.SelectedValue);
+            double bmi = BMI.Calculate();
+            double pi = PI.Calculate();
+
+            int personId = (int)comboBox1.SelectedValue;
 
             string query = @"
-        INSERT INTO dbo.ValoriIndecsi (PersonId, Mass, Height, Date, BMI, PI)
-        VALUES (@PersonId, @Mass, @Height, @Date, @BMI, @PI)";
+    INSERT INTO dbo.ValoriIndecsi (PersonId, Mass, Height, Date, BMI, PI)
+    VALUES (@PersonId, @Mass, @Height, @Date, @BMI, @PI)";
 
             SqlParameter[] parameters = new SqlParameter[]
             {
@@ -182,12 +116,14 @@ namespace MassIndex_calculator
             {
                 db.ExecuteNonQuery(query, parameters);
 
-                MessageBox.Show("Saved successfully!");
-
                 LoadDataInDVG();
 
-                textBox1.Clear();
-                textBox2.Clear();
+                MessageBox.Show("Saved!");
+
+                // reset numeric controls instead of textboxes
+                numericUpDown1.Value = numericUpDown1.Minimum;
+                numericUpDown2.Value = numericUpDown2.Minimum;
+
                 textBox3.Clear();
                 textBox4.Clear();
                 textBox5.Clear();
@@ -200,5 +136,42 @@ namespace MassIndex_calculator
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+
+        // ================= ADD PERSON =================
+        private void AddPersButton_Click(object sender, EventArgs e)
+        {
+            var form = new AddPerson();
+
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                LoadPeopleIntoComboBox();
+                comboBox1.SelectedValue = form.NewPersonId;
+            }
+        }
+
+        // ================= CALCULATE =================
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+            float masa = (float)numericUpDown1.Value;
+            float inaltime = (float)numericUpDown2.Value;
+
+            BMICalculator BMI = new BMICalculator(inaltime, masa);
+            PICalculator PI = new PICalculator(inaltime, masa);
+
+            textBox3.Text = BMI.Calculate().ToString("0.00");
+            textBox4.Text = PI.Calculate().ToString("0.00");
+
+            textBox5.Text = BMI.WeightCategory();
+            textBox6.Text = PI.WeightCategory();
+
+            float diffBMI = BMI.GetWeightDiffrence();
+            float diffPI = PI.GetWeightDiffrence();
+
+            textBox7.Text = FormatWeightMessage(diffBMI);
+            textBox8.Text = FormatWeightMessage(diffPI);
+        }
+
+        
     }
 }

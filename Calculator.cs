@@ -23,9 +23,9 @@ namespace MassIndex_calculator
             Masa = masa;
         }
 
-        public virtual string IdealWeight()
+        public virtual float GetWeightDiffrence()
         {
-            return "Nu s-a implementat";
+            return 0;
         }
 
         public virtual string WeightCategory()
@@ -33,9 +33,9 @@ namespace MassIndex_calculator
             return "Nu s-a implementat";
         }
 
-        public virtual string Calculate()
+        public virtual float Calculate()
         {
-            return "Nu s-a implementat";
+            return 0;
 
         }
 
