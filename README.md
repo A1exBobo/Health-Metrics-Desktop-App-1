@@ -67,9 +67,6 @@ The application allows users to manage multiple people, record historical data (
 
 <img width="1920" height="1080" alt="Captură de ecran 2026-04-14 191827" src="https://github.com/user-attachments/assets/db7ea7cb-b87e-45b3-bae1-161f375b8539" />
 
-*(Add screenshots here if possible — highly recommended)*
-
----
 
 ##  How to Run
 
